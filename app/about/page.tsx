@@ -81,7 +81,10 @@ export default function AboutPage() {
             <h2 className="text-5xl md:text-7xl uppercase font-display font-bold">Our Evolution</h2>
           </div>
           
-          <div className="relative border-l border-swiss-black/10 ml-4 md:ml-0 md:left-1/2">
+          <div className="relative">
+            {/* Central Line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-swiss-black/10 -translate-x-1/2" />
+            
             {[
               { year: "2018", title: "Inception in Mumbai", desc: "Founded with a vision to bridge the gap between traditional banking and personalized financial stewardship." },
               { year: "2020", title: "Middle East Expansion", desc: "Established our Dubai HQ to serve the growing needs of the global Indian diaspora in the Gulf." },
@@ -95,12 +98,16 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: i * 0.1 }}
-                className={`relative mb-24 md:w-1/2 ${i % 2 === 0 ? "md:pr-12 md:text-right md:ml-0" : "md:pl-12 md:text-left md:ml-auto"}`}
+                className={`relative mb-24 w-full md:w-1/2 ${i % 2 === 0 ? "pl-12 md:pl-0 md:pr-16 text-left md:text-right md:ml-0" : "pl-12 md:pl-16 text-left md:text-left md:ml-auto"}`}
               >
-                <div className={`absolute top-0 w-4 h-4 bg-swiss-blue rounded-full border-4 border-swiss-bg ${i % 2 === 0 ? "-left-[9px] md:-right-[9px] md:left-auto" : "-left-[9px]"}`} />
+                {/* Dot */}
+                <div className={`absolute top-2 w-4 h-4 bg-swiss-blue rounded-full border-4 border-swiss-bg z-10 
+                  ${i % 2 === 0 ? "left-4 md:left-auto md:-right-2 -translate-x-1/2 md:translate-x-1/2" : "left-4 md:-left-2 -translate-x-1/2"}`} 
+                />
+                
                 <div className="text-4xl font-display font-bold text-swiss-blue mb-2">{event.year}</div>
                 <h3 className="text-xl font-bold uppercase mb-4">{event.title}</h3>
-                <p className="text-swiss-dark-gray leading-relaxed max-w-md mx-auto md:mx-0">{event.desc}</p>
+                <p className="text-swiss-dark-gray leading-relaxed max-w-md md:ml-auto">{i % 2 === 0 ? event.desc : <span className="md:ml-0">{event.desc}</span>}</p>
               </motion.div>
             ))}
           </div>
