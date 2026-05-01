@@ -1,0 +1,295 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@700&f[]=satoshi@500,700&display=swap');
+
+@theme {
+  /* Core Palette */
+  --color-swiss-bg: #f2f2f2;
+  --color-swiss-black: #111111;
+  --color-swiss-muted: #b6b5b5;
+  --color-swiss-dark-gray: #838282;
+  --color-swiss-white: #FAFAFA;
+  --color-swiss-cream: #F8F6F3;
+
+  /* Blue Accent System */
+  --color-swiss-blue: #0066FF;
+  --color-swiss-blue-light: #3385FF;
+  --color-swiss-blue-dark: #0047B3;
+
+  /* Semantic Aliases */
+  --color-primary: var(--color-swiss-black);
+  --color-on-primary: var(--color-swiss-bg);
+  --color-surface: var(--color-swiss-bg);
+  --color-on-surface: var(--color-swiss-black);
+  --color-accent: var(--color-swiss-blue);
+
+  /* Typography */
+  --font-sans: 'Satoshi', sans-serif;
+  --font-display: 'Clash Display', sans-serif;
+  --font-serif: 'Georgia', 'Times New Roman', serif;
+}
+
+/* ═══════════════════════════════════════════
+   BASE LAYER
+   ═══════════════════════════════════════════ */
+@layer base {
+  body {
+    @apply bg-swiss-bg text-swiss-black antialiased;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  }
+
+  h1, h2, h3, h4, h5 {
+    @apply font-display font-bold uppercase;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+  }
+
+  /* Smooth scroll behavior with reduced-motion support */
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+
+  ::selection {
+    @apply bg-swiss-blue/20 text-swiss-black;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR
+   ═══════════════════════════════════════════ */
+.custom-cursor {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  mix-blend-mode: difference;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.custom-cursor.hovering {
+  width: 100px;
+  height: 100px;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL PROGRESS BAR
+   ═══════════════════════════════════════════ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--color-swiss-blue);
+  z-index: 99999;
+  transform-origin: left;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION ENTRANCE ANIMATIONS
+   ═══════════════════════════════════════════ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children — use with JS IntersectionObserver */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 0.12s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 0.19s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 0.26s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 0.33s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(6) { transition-delay: 0.40s; opacity: 1; transform: translateY(0); }
+
+/* ═══════════════════════════════════════════
+   BUTTON FILL ANIMATION
+   ═══════════════════════════════════════════ */
+.btn-fill {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.btn-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-swiss-black);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: -1;
+}
+
+.btn-fill:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.btn-fill:hover {
+  color: var(--color-swiss-bg);
+}
+
+/* ═══════════════════════════════════════════
+   PRELOADER
+   ═══════════════════════════════════════════ */
+@keyframes preloader-reveal {
+  0%   { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 100% 0); }
+}
+
+@keyframes preloader-text {
+  0%   { opacity: 1; transform: translateY(0); }
+  70%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-30px); }
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: var(--color-swiss-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: preloader-reveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) 2s forwards;
+}
+
+.preloader-text {
+  color: var(--color-swiss-bg);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 6rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  animation: preloader-text 2.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+/* ═══════════════════════════════════════════
+   EXISTING COMPONENT STYLES
+   ═══════════════════════════════════════════ */
+.echo-container {
+  position: relative;
+  display: inline-block;
+}
+
+.echo-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: -1;
+  white-space: nowrap;
+}
+
+.clip-reveal {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 700ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.clip-reveal.active {
+  clip-path: inset(0% 0 0 0);
+}
+
+.grayscale-hover {
+  @apply grayscale-[20%] transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)];
+}
+
+.grayscale-hover:hover {
+  @apply grayscale-0 scale-105;
+}
+
+.pill-container {
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.glass-header {
+  background: rgba(242, 242, 242, 0.9);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+}
+
+/* Optimized noise overlay — reduced from -200% to -50% for GPU performance */
+.noise-bg::before {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("/assets/noise.svg");
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  animation: noise 0.2s infinite;
+}
+
+@keyframes noise {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -5%); }
+  20% { transform: translate(-10%, 5%); }
+  30% { transform: translate(5%, -10%); }
+  40% { transform: translate(-5%, 15%); }
+  50% { transform: translate(-10%, 5%); }
+  60% { transform: translate(15%, 0); }
+  70% { transform: translate(0, 10%); }
+  80% { transform: translate(-15%, 0); }
+  90% { transform: translate(10%, 5%); }
+  100% { transform: translate(5%, 0); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.mask-fade-out {
+  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .stagger-children > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .noise-bg::before {
+    animation: none;
+  }
+
+  .preloader {
+    animation-duration: 0.01s;
+  }
+}
