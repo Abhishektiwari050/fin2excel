@@ -161,10 +161,10 @@ function ServiceItem({ service, index }: { service: any, index: number }) {
         <motion.img 
           src={service.img} 
           alt={service.title}
-          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ease-in-out scale-110 group-hover:scale-100"
+          className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 ease-in-out"
           style={{ scale }}
         />
-        <div className="absolute inset-0 bg-swiss-black/20 group-hover:bg-transparent transition-colors duration-700" />
+        <div className="absolute inset-0 bg-swiss-blue/5 group-hover:bg-transparent transition-colors duration-700" />
       </div>
     </motion.section>
   )

@@ -82,21 +82,21 @@ function LinePath({ scrollYProgress }: { scrollYProgress: any }) {
         viewBox="0 0 1278 2319"
         fill="none"
         preserveAspectRatio="xMidYMid slice"
-        className="w-full h-full text-[#C2F84F] drop-shadow-[0_0_15px_rgba(194,248,79,0.3)]"
+        className="w-full h-full text-swiss-blue"
       >
         {/* Background track */}
         <path
           d={pathData}
           stroke="currentColor"
-          strokeWidth="8"
+          strokeWidth="4"
           strokeLinecap="round"
-          className="opacity-10"
+          className="opacity-5"
         />
         {/* Animated Path */}
         <motion.path
           d={pathData}
           stroke="currentColor"
-          strokeWidth="8"
+          strokeWidth="4"
           strokeLinecap="round"
           style={{
             pathLength,
@@ -107,7 +107,7 @@ function LinePath({ scrollYProgress }: { scrollYProgress: any }) {
       
       {/* Glowing Dot following the path */}
       <motion.div
-        className="absolute w-4 h-4 bg-[#C2F84F] rounded-full shadow-[0_0_20px_#C2F84F] z-20 pointer-events-none"
+        className="absolute w-4 h-4 bg-swiss-blue rounded-full shadow-[0_0_20px_rgba(0,102,255,0.8)] z-20 pointer-events-none"
         style={{
           offsetPath: `path('${pathData}')`,
           offsetDistance: useTransform(pathLength, [0, 1], ["0%", "100%"]),

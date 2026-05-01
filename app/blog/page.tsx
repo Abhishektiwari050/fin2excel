@@ -106,7 +106,7 @@ export default function BlogPage() {
                   <img 
                     src={post.img} 
                     alt={post.title} 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" 
                   />
                 </div>
                 <div className="space-y-6">
@@ -131,39 +131,45 @@ export default function BlogPage() {
         )}
 
         {/* Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-12 gap-y-20">
+        <div className="grid grid-cols-1 gap-y-16">
           {filteredPosts.filter(p => !p.featured || activeCategory !== "All").map((post, i) => (
-            <motion.div
+            <motion.article 
               key={post.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
               viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="group flex flex-col md:flex-row gap-8 md:gap-12 pb-16 border-b border-swiss-black/5"
             >
-              <Link href={`/blog/${post.id}`} className="group block space-y-6">
-                <div className="aspect-[16/9] overflow-hidden mb-6">
-                  <img 
-                    src={post.img} 
-                    alt={post.title} 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" 
-                  />
+              <Link href={`/blog/${post.id}`} className="flex-1 aspect-[16/9] md:aspect-[4/3] overflow-hidden rounded-sm relative block">
+                <img 
+                  src={post.img} 
+                  alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                />
+                <div className="absolute inset-0 bg-swiss-blue/0 group-hover:bg-swiss-blue/10 transition-colors duration-700" />
+              </Link>
+              <div className="flex-[1.5] flex flex-col justify-center space-y-4">
+                <div className="flex items-center gap-4">
+                  <span className="text-[10px] tracking-[0.3em] uppercase text-swiss-blue font-bold">{post.category}</span>
+                  <span className="w-1 h-1 bg-swiss-black/20 rounded-full" />
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-swiss-dark-gray font-bold">{post.readTime}</span>
                 </div>
-                <div className="space-y-4">
-                  <span className="text-[9px] tracking-[0.4em] uppercase text-swiss-blue font-bold">{post.category}</span>
-                  <h3 className="text-2xl font-display font-bold leading-tight group-hover:text-swiss-blue transition-colors">
+                <Link href={`/blog/${post.id}`} className="block">
+                  <h3 className="text-3xl md:text-5xl font-display font-bold leading-tight group-hover:text-swiss-blue transition-colors uppercase">
                     {post.title}
                   </h3>
-                  <p className="text-base text-swiss-dark-gray leading-relaxed line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center gap-4 text-[10px] font-bold text-swiss-dark-gray/60 uppercase tracking-widest pt-2">
-                    <span>{post.author}</span>
-                    <span>•</span>
-                    <span>{post.readTime}</span>
-                  </div>
+                </Link>
+                <p className="text-swiss-dark-gray leading-relaxed max-w-xl">
+                  {post.excerpt}
+                </p>
+                <div className="pt-4">
+                  <Link href={`/blog/${post.id}`} className="text-xs font-bold tracking-[0.4em] uppercase border-b border-swiss-black pb-1 hover:text-swiss-blue hover:border-swiss-blue transition-all">
+                    Read Experience
+                  </Link>
                 </div>
-              </Link>
-            </motion.div>
+              </div>
+            </motion.article>
           ))}
         </div>
 

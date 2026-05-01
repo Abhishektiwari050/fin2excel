@@ -36,6 +36,11 @@
   body {
     @apply bg-swiss-bg text-swiss-black antialiased;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    cursor: none !important;
+  }
+
+  * {
+    cursor: none !important;
   }
 
   h1, h2, h3, h4, h5 {
@@ -213,11 +218,11 @@
 }
 
 .grayscale-hover {
-  @apply grayscale-[20%] transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)];
+  @apply transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)];
 }
 
 .grayscale-hover:hover {
-  @apply grayscale-0 scale-105;
+  @apply scale-105;
 }
 
 .pill-container {
@@ -247,17 +252,10 @@
 }
 
 @keyframes noise {
-  0% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -5%); }
-  20% { transform: translate(-10%, 5%); }
-  30% { transform: translate(5%, -10%); }
-  40% { transform: translate(-5%, 15%); }
-  50% { transform: translate(-10%, 5%); }
-  60% { transform: translate(15%, 0); }
-  70% { transform: translate(0, 10%); }
-  80% { transform: translate(-15%, 0); }
-  90% { transform: translate(10%, 5%); }
-  100% { transform: translate(5%, 0); }
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, -2%); }
+  50% { transform: translate(2%, 2%); }
+  75% { transform: translate(-2%, 2%); }
 }
 
 @keyframes marquee {
