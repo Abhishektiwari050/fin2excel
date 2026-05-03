@@ -125,9 +125,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       endpoint: 'articles', 
       query: { 
         'filters[slug][$eq]': resolvedParams.slug,
-        'populate[category]': '*',
-        'populate[cover]': '*',
-        'populate[author][populate]': '*'
+        'populate': '*'
       } 
     });
     
