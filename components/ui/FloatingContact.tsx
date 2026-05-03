@@ -24,12 +24,12 @@ export function FloatingContact() {
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
-      animate={{ 
-        opacity: scrolled ? 1 : 0, 
+      animate={{
+        opacity: scrolled ? 1 : 0,
         x: scrolled ? 0 : 20,
         pointerEvents: scrolled ? "auto" : "none"
       }}
-      className="fixed bottom-8 right-6 md:right-10 z-[90] flex flex-col gap-4 transform-gpu will-change-transform"
+      className="fixed bottom-8 right-6 md:right-10 z-[90] flex flex-col gap-4"
     >
       {/* Call Button */}
       <a

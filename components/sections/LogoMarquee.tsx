@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { BlurredInfiniteSlider } from '@/components/ui/infinite-slider';
 
 const LOGOS = [
@@ -21,7 +20,7 @@ const LOGOS = [
 
 export function LogoMarquee() {
     return (
-        <section className="bg-swiss-bg overflow-hidden py-8 border-b border-swiss-black/5 transform-gpu">
+        <section className="bg-swiss-bg overflow-hidden py-8 border-b border-swiss-black/5">
             <div className="mx-auto max-w-7xl px-6">
                 <div className="flex flex-col items-center md:flex-row gap-12">
                     <div className="flex-shrink-0 text-center md:text-left md:max-w-[200px] md:border-r md:border-swiss-black/10 md:pr-12">
@@ -35,16 +34,15 @@ export function LogoMarquee() {
                             gap={100}
                             fadeWidth={80}
                         >
-                             {LOGOS.map((logo, i) => (
-                                <div key={`${logo.src}-${i}`} className="flex items-center justify-center px-4 transition-all duration-500 hover:scale-110 transform-gpu will-change-transform">
-                                    <Image
+                            {LOGOS.map((logo, i) => (
+                                <div key={`${logo.src}-${i}`} className="flex items-center justify-center px-4 transition-all duration-500 hover:scale-110">
+                                    <img
                                         className="w-auto object-contain"
                                         src={logo.src}
                                         alt={logo.alt}
-                                        height={logo.h}
-                                        width={120} // Estimated width for aspect ratio
-                                        unoptimized={logo.src.endsWith('.svg')}
-                                        loading="lazy"
+                                        style={{ height: `${logo.h}px` }}
+                                        loading="eager"
+                                        referrerPolicy="no-referrer"
                                     />
                                 </div>
                             ))}

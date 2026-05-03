@@ -8,7 +8,7 @@ export function CTASection() {
   const inView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section ref={ref} className="relative py-20 md:py-24 px-6 md:px-10 text-swiss-bg overflow-hidden min-h-[70vh] flex items-center transform-gpu will-change-transform">
+    <section ref={ref} className="relative py-20 md:py-24 px-6 md:px-10 text-swiss-bg overflow-hidden min-h-[70vh] flex items-center">
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
         <video
@@ -34,7 +34,7 @@ export function CTASection() {
 
       {/* Subtle grid texture on top of video */}
       <div className="absolute inset-0 z-[1] bg-[linear-gradient(to_right,#ffffff04_1px,transparent_1px),linear-gradient(to_bottom,#ffffff04_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none" />
-      
+
       {/* Large background text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-[1]" aria-hidden="true">
         <span className="text-[15vw] font-display font-bold text-white/[0.03] uppercase tracking-tighter whitespace-nowrap">
@@ -44,14 +44,14 @@ export function CTASection() {
 
       <div className="relative z-10 max-w-4xl mx-auto text-center w-full">
         {/* Blue accent line */}
-        <motion.div 
+        <motion.div
           className="w-16 h-[2px] bg-swiss-blue mx-auto mb-12"
           initial={{ scaleX: 0 }}
           animate={inView ? { scaleX: 1 } : {}}
           transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
         />
-        
-        <motion.p 
+
+        <motion.p
           className="text-[10px] tracking-[0.6em] uppercase text-swiss-blue font-bold mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -59,18 +59,18 @@ export function CTASection() {
         >
           Private Consultation
         </motion.p>
- 
-        <motion.h2 
+
+        <motion.h2
           className="text-4xl md:text-7xl lg:text-8xl uppercase leading-[0.85] tracking-tighter mb-8"
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
-          Your Indian <br /> Legacy, <br /> 
+          Your Indian <br /> Legacy, <br />
           <span className="italic text-swiss-blue/80">Managed.</span>
         </motion.h2>
-        
-        <motion.p 
+
+        <motion.p
           className="text-white/70 text-sm md:text-base max-w-lg mx-auto uppercase tracking-[0.2em] font-bold mb-14"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -84,7 +84,7 @@ export function CTASection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.7 }}
         >
-          <button className="group relative px-14 py-6 bg-transparent border border-swiss-blue/40 text-swiss-bg rounded-sm text-xs font-bold tracking-[0.4em] uppercase overflow-hidden transition-all duration-500 hover:border-swiss-blue backdrop-blur-sm transform-gpu">
+          <button className="group relative px-14 py-6 bg-transparent border border-swiss-blue/40 text-swiss-bg rounded-sm text-xs font-bold tracking-[0.4em] uppercase overflow-hidden transition-all duration-500 hover:border-swiss-blue backdrop-blur-sm">
             <span className="relative z-10 group-hover:text-swiss-black transition-colors duration-500">
               Start Your Journey
             </span>
@@ -93,7 +93,7 @@ export function CTASection() {
         </motion.div>
 
         {/* Trust indicators */}
-        <motion.div 
+        <motion.div
           className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-8 text-[10px] tracking-[0.3em] uppercase text-white/40"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
