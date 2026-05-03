@@ -72,9 +72,9 @@ const Skiper19 = () => {
         ))}
       </div>
 
-      <div className="absolute inset-0 w-full h-full pointer-events-none flex justify-center items-center opacity-40">
+      <div className="absolute inset-0 w-full h-full pointer-events-none opacity-40">
         <LinePath
-          className="w-[120%] md:w-full h-[150%] md:h-[120%] object-cover object-top -mt-[20vh]"
+          className="w-full h-full object-fill"
           scrollYProgress={scrollYProgress}
         />
       </div>
@@ -95,11 +95,12 @@ const LinePath = ({
 
   return (
     <svg
-      width="1278"
-      height="2319"
+      width="100%"
+      height="100%"
       viewBox="0 0 1278 2319"
       fill="none"
       overflow="visible"
+      preserveAspectRatio="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
