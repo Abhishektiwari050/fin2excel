@@ -12,6 +12,7 @@
   "dependencies": {
     "@strapi/blocks-react-renderer": "^1.0.2",
     "@supabase/supabase-js": "^2.105.1",
+    "@vercel/analytics": "^2.0.1",
     "autoprefixer": "^10.4.21",
     "clsx": "^2.1.1",
     "cobe": "^2.0.1",
