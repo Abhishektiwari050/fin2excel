@@ -199,7 +199,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
         </div>
 
-        <div className="prose prose-lg max-w-none font-sans text-swiss-black/90 leading-[1.8] space-y-6 blog-content">
+        <div className="prose prose-lg max-w-none font-serif text-swiss-black/90 leading-[1.8] space-y-6 blog-content">
           {Array.isArray(post.content) ? (
             <BlocksRenderer content={post.content} />
           ) : (
