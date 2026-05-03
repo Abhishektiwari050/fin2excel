@@ -68,10 +68,18 @@ export async function POST(req: Request) {
     });
 
     if (resendError) {
-      console.error('Resend Error:', resendError);
-      return NextResponse.json({ error: resendError.message }, { status: 500 });
+      console.error('❌ Resend Error:', resendError);
+      // Detailed error for the user to see in logs
+      if (resendError.name === 'validation_error') {
+        console.warn('💡 Tip: If you are in Resend Sandbox mode, you can ONLY send emails to the address you signed up with.');
+      }
+      return NextResponse.json({ 
+        error: resendError.message,
+        details: "Email failed to send. Check if you are in Resend Sandbox mode."
+      }, { status: 500 });
     }
 
+    console.log('✅ Email sent successfully via Resend');
     return NextResponse.json({ success: true, data });
   } catch (error) {
     console.error('Contact API Error:', error);
