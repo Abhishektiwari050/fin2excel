@@ -1,6 +1,5 @@
 export default ({ env }: { env: any }) => ({
   // Temporarily disabled to fix provider.init crash
-  /*
   upload: {
     config: {
       provider: 'cloudinary',
@@ -15,5 +14,4 @@ export default ({ env }: { env: any }) => ({
       },
     },
   },
-  */
 });
