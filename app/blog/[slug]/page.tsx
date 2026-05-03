@@ -66,31 +66,40 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       endpoint: 'articles', 
       query: { 
         'filters[slug][$eq]': resolvedParams.slug,
-        'populate': '*'
+        'populate[seo][populate]': '*',
+        'populate[cover]': '*',
+        'populate[author]': '*'
       } 
     });
     
     if (res?.data?.length > 0) {
       const article = res.data[0];
+      const seo = article.seo;
+      
       post = {
-        title: article.title,
-        subtitle: article.excerpt,
-        image: article.cover?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}${article.cover.url}` : '/assets/hero-office.png',
-        author: { name: article.author?.name || 'Fin2Excel Team' }
+        title: seo?.metaTitle || article.title,
+        description: seo?.metaDescription || article.excerpt,
+        keywords: seo?.keywords,
+        image: seo?.metaImage?.url 
+          ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}${seo.metaImage.url}`
+          : (article.cover?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}${article.cover.url}` : '/assets/hero-office.png'),
+        author: { name: article.author?.name || 'Fin2Excel Team' },
+        robots: seo?.metaRobots || 'index, follow',
+        canonical: seo?.canonicalURL || `https://fin2excel.com/blog/${resolvedParams.slug}`
       }
     }
   } catch (e) {}
 
-  const url = `https://fin2excel.com/blog/${resolvedParams.slug}`;
-
   return {
     title: `${post.title} | Fin2Excel Insights`,
-    description: post.subtitle,
-    alternates: { canonical: url },
+    description: post.description,
+    keywords: post.keywords,
+    alternates: { canonical: post.canonical },
+    robots: post.robots,
     openGraph: {
       title: post.title,
-      description: post.subtitle,
-      url,
+      description: post.description,
+      url: post.canonical,
       type: 'article',
       authors: [post.author?.name],
       images: [{ url: post.image, width: 1200, height: 630, alt: post.title }],
@@ -98,7 +107,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.subtitle,
+      description: post.description,
       images: [post.image],
     }
   }
@@ -113,7 +122,9 @@ export default async function BlogPostPage({ params }: PageProps) {
       endpoint: 'articles', 
       query: { 
         'filters[slug][$eq]': resolvedParams.slug,
-        'populate': '*'
+        'populate[category]': '*',
+        'populate[cover]': '*',
+        'populate[author][populate]': '*'
       } 
     });
     

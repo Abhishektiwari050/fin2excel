@@ -73,7 +73,7 @@ export default async function BlogPage() {
     // Populate relations to get images, categories, and authors
     const res = await fetchAPI({ 
       endpoint: 'articles', 
-      query: { populate: '*' },
+      query: { populate: ['category', 'cover', 'author'] },
       options: { next: { revalidate: 60 } } 
     });
 
