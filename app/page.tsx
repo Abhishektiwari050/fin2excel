@@ -35,25 +35,25 @@ export default function LandingPage() {
       title: "Property & Investment",
       desc: "End-to-end management of Indian real estate portfolios and diversified investment vehicles for HNIs.",
       shape: "square",
-      img: "/assets/hero-office.png"
+      img: "/assets/service-wealth.png"
     },
     {
       title: "Legal & Taxation",
       desc: "Sophisticated tax planning and cross-border legal compliance for NRIs and global families.",
       shape: "triangle",
-      img: "/assets/global-network.png"
+      img: "/assets/service-legal.png"
     },
     {
       title: "Elder Care",
       desc: "Dedicated single-point solutions for family well-being and logistical support in India.",
       shape: "circle",
-      img: "/assets/hero-office.png"
+      img: "/assets/service-elder.png"
     },
     {
       title: "Property Management",
       desc: "Active oversight and maintenance of residential and commercial assets with surgical precision.",
       shape: "square",
-      img: "/assets/global-network.png"
+      img: "/assets/service-property.png"
     }
   ]
 
