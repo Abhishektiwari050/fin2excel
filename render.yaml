@@ -1,0 +1,30 @@
+services:
+  # Strapi CMS
+  - type: web
+    name: fin2excel-cms
+    runtime: node
+    rootDir: cms
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 18
+      - key: DATABASE_CLIENT
+        value: postgres
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fin2excel-db
+          property: connectionString
+      # Cloudinary Env Vars
+      - key: CLOUDINARY_NAME
+        value: dbqgjyut7
+      - key: CLOUDINARY_KEY
+        value: 925333966734263
+      - key: CLOUDINARY_SECRET
+        value: b8Nw04ZcN6WtMZ-W8kx3nOE4yTE
+
+databases:
+  - name: fin2excel-db
+    plan: free

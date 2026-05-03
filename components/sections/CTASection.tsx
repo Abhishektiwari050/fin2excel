@@ -37,7 +37,7 @@ export function CTASection() {
       
       {/* Large background text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-[1]" aria-hidden="true">
-        <span className="text-[20vw] font-display font-bold text-white/[0.03] uppercase tracking-tighter whitespace-nowrap">
+        <span className="text-[15vw] font-display font-bold text-white/[0.03] uppercase tracking-tighter whitespace-nowrap">
           Legacy
         </span>
       </div>
@@ -59,9 +59,9 @@ export function CTASection() {
         >
           Private Consultation
         </motion.p>
-
+ 
         <motion.h2 
-          className="text-5xl md:text-8xl uppercase leading-[0.85] tracking-tighter mb-8"
+          className="text-4xl md:text-7xl lg:text-8xl uppercase leading-[0.85] tracking-tighter mb-8"
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}

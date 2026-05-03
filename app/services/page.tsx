@@ -82,10 +82,10 @@ export default function ServicesPage() {
           <span className="text-[10px] tracking-[0.5em] uppercase text-swiss-blue font-bold mb-4 block">
             Our Ecosystem
           </span>
-          <h1 className="text-[12vw] md:text-[10vw] leading-[0.85] mb-8">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl leading-[0.85] mb-8 tracking-tighter">
             Precision<br />Services
           </h1>
-          <p className="text-xl md:text-2xl max-w-2xl text-swiss-dark-gray font-sans font-medium leading-tight">
+          <p className="text-xl md:text-3xl max-w-2xl text-swiss-dark-gray font-sans font-medium leading-tight">
             A comprehensive suite of private concierge solutions designed for the global Indian elite.
           </p>
         </motion.div>
@@ -106,7 +106,7 @@ export default function ServicesPage() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-5xl md:text-8xl mb-10">Ready for Clarity?</h2>
+          <h2 className="text-5xl md:text-7xl lg:text-8xl mb-10 tracking-tighter uppercase font-display font-bold">Ready for Clarity?</h2>
           <button className="px-12 py-5 bg-swiss-blue text-swiss-black font-bold uppercase tracking-widest text-sm hover:bg-swiss-bg transition-colors duration-500">
             Design Your Strategy
           </button>
@@ -140,7 +140,7 @@ function ServiceItem({ service, index }: { service: any, index: number }) {
           <span className="text-sm font-bold tracking-widest text-swiss-blue uppercase mb-2 block">
             {service.subtitle}
           </span>
-          <h2 className="text-6xl md:text-8xl mb-6">{service.title}</h2>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl mb-6 tracking-tighter uppercase font-display">{service.title}</h2>
           <p className="text-lg text-swiss-dark-gray max-w-xl mb-10 font-sans">
             {service.desc}
           </p>

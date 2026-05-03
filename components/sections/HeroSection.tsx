@@ -25,7 +25,7 @@ export function HeroSection({ globeOpacity, globeScale, globeY, textY }: HeroSec
   const leftCardRotate = useTransform(globeY, [0, 100], [-6, 2])
 
   return (
-    <section className={`relative min-h-screen flex flex-col items-center justify-center pt-32 pb-0 px-6 overflow-hidden transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
+    <section className={`relative min-h-screen flex flex-col items-center justify-center pt-40 pb-0 px-6 overflow-hidden transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
       {/* Floating Image Card */}
       <motion.div 
         initial={{ opacity: 0, x: 100, rotate: 10 }}
@@ -89,7 +89,7 @@ export function HeroSection({ globeOpacity, globeScale, globeY, textY }: HeroSec
       <motion.div style={{ y: textY }} className="relative z-10 text-center flex flex-col items-center">
         <EchoText 
           text="FIN2EXCEL" 
-          className="text-[20vw] md:text-[180px] font-display font-bold leading-[0.8]"
+          className="text-7xl md:text-9xl lg:text-[11rem] xl:text-[13rem] font-display font-bold leading-[0.8]"
         />
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

@@ -1,20 +1,17 @@
-"use client"
+import { Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { fetchAPI } from '@/lib/strapi'
+import { JsonLd } from '@/components/ui/JsonLd'
 
-import { useParams } from "next/navigation"
-import { motion } from "motion/react"
-import Link from "next/link"
-
-export default function BlogPostPage() {
-  const params = useParams()
-  const slug = params.slug as string
-
-  // Mock data for the blog post
-  const post = {
+// Fallback data
+const fallbackPosts: Record<string, any> = {
+  "silent-migration-global-indian-wealth": {
     title: "The Shift in Global NRI Wealth Management",
     subtitle: "Why traditional banking is failing the modern Indian diaspora and the rise of the concierge model.",
     author: {
-      name: "Abhishek Tiwari",
-      role: "Managing Partner",
+      name: "Adv. Jag Mohan Kapoor",
+      role: "Founder & Managing Director",
       avatar: "/assets/logo.png"
     },
     date: "May 1, 2026",
@@ -22,98 +19,179 @@ export default function BlogPostPage() {
     category: "Wealth Strategy",
     image: "/assets/hero-office.png",
     content: `
-      <p className="text-xl leading-relaxed mb-8">
+      <p class="text-xl leading-relaxed mb-8">
         The landscape of wealth management for Non-Resident Indians (NRIs) has undergone a tectonic shift over the last decade. As the Indian economy integrates more deeply with global markets, the needs of the diaspora have evolved from simple remittance management to complex, multi-jurisdictional estate planning and asset stewardship.
       </p>
 
-      <h2 className="text-3xl font-display font-bold mt-16 mb-6 uppercase tracking-tight">The Failure of Traditional Banking</h2>
-      <p className="mb-6">
+      <h2 class="text-3xl font-display font-bold mt-16 mb-6 uppercase tracking-tight">The Failure of Traditional Banking</h2>
+      <p class="mb-6">
         For years, traditional "Priority Banking" for NRIs was limited to high-interest NRE accounts and basic mutual fund distribution. However, these models often suffered from high turnover in relationship managers and a "product-first" rather than "client-first" approach. 
       </p>
-      <p className="mb-10">
+      <p class="mb-10">
         Modern HNIs require more than just an account manager; they require a fiduciary who understands the intersection of FEMA regulations, UK/US taxation, and the emotional complexities of managing family assets in India.
       </p>
 
-      <blockquote className="border-l-4 border-swiss-blue pl-8 py-4 my-12 italic text-2xl font-serif text-swiss-black/80">
+      <blockquote class="border-l-4 border-swiss-blue pl-8 py-4 my-12 italic text-2xl font-serif text-swiss-black/80">
         "True wealth management isn't about the rate of return; it's about the depth of the relationship and the certainty of the outcome."
       </blockquote>
 
-      <h2 className="text-3xl font-display font-bold mt-16 mb-6 uppercase tracking-tight">The Concierge Advantage</h2>
-      <p className="mb-6">
+      <h2 class="text-3xl font-display font-bold mt-16 mb-6 uppercase tracking-tight">The Concierge Advantage</h2>
+      <p class="mb-6">
         This is where the concierge model steps in. By acting as a single point of contact for everything—from legal compliance to property maintenance and elder care—we remove the friction of distance. 
       </p>
-      <ul className="list-disc pl-6 mb-10 space-y-4">
+      <ul class="list-disc pl-6 mb-10 space-y-4">
         <li><strong>Unified Reporting:</strong> A single dashboard for all Indian assets, across banks and asset classes.</li>
         <li><strong>Proactive Compliance:</strong> Managing tax filings and legal documentation before they become emergencies.</li>
         <li><strong>On-Ground Execution:</strong> Physical presence in India to manage properties and family needs.</li>
       </ul>
 
-      <h2 className="text-3xl font-display font-bold mt-16 mb-6 uppercase tracking-tight">Looking Ahead</h2>
-      <p className="mb-6">
+      <h2 class="text-3xl font-display font-bold mt-16 mb-6 uppercase tracking-tight">Looking Ahead</h2>
+      <p class="mb-6">
         As we move towards 2027, the focus will increasingly shift towards "Legacy Engineering"—ensuring that wealth isn't just preserved, but successfully transitioned to the next generation with minimal legal friction and maximum impact.
       </p>
     `
   }
+}
+
+interface PageProps {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  let post = fallbackPosts[resolvedParams.slug] || fallbackPosts["silent-migration-global-indian-wealth"];
+
+  try {
+    const res = await fetchAPI({ 
+      endpoint: 'articles', 
+      query: { 
+        filters: { slug: { $eq: resolvedParams.slug } },
+        populate: '*'
+      } 
+    });
+    
+    if (res?.data?.length > 0) {
+      const article = res.data[0];
+      post = {
+        title: article.title,
+        subtitle: article.excerpt,
+        image: article.cover?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}${article.cover.url}` : '/assets/hero-office.png',
+        author: { name: article.author?.name || 'Fin2Excel Team' }
+      }
+    }
+  } catch (e) {}
+
+  const url = `https://fin2excel.com/blog/${resolvedParams.slug}`;
+
+  return {
+    title: `${post.title} | Fin2Excel Insights`,
+    description: post.subtitle,
+    alternates: { canonical: url },
+    openGraph: {
+      title: post.title,
+      description: post.subtitle,
+      url,
+      type: 'article',
+      authors: [post.author?.name],
+      images: [{ url: post.image, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.subtitle,
+      images: [post.image],
+    }
+  }
+}
+
+export default async function BlogPostPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  let post = fallbackPosts[resolvedParams.slug] || fallbackPosts["silent-migration-global-indian-wealth"];
+
+  try {
+    const res = await fetchAPI({ 
+      endpoint: 'articles', 
+      query: { 
+        filters: { slug: { $eq: resolvedParams.slug } },
+        populate: '*'
+      } 
+    });
+    
+    if (res?.data?.length > 0) {
+      const article = res.data[0];
+      post = {
+        title: article.title,
+        subtitle: article.excerpt,
+        content: article.content,
+        category: article.category?.name || "Wealth Strategy",
+        date: new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+        readTime: `${article.readTime || 8} min read`,
+        image: article.cover?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}${article.cover.url}` : '/assets/hero-office.png',
+        author: {
+          name: article.author?.name || "Fin2Excel Team",
+          role: article.author?.role || "Contributor",
+          avatar: article.author?.avatar?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}${article.author.avatar.url}` : '/assets/logo.png'
+        }
+      };
+    }
+  } catch (e) {}
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.subtitle,
+    "image": post.image.startsWith('http') ? post.image : `https://fin2excel.com${post.image}`,
+    "author": { "@type": "Person", "name": post.author.name },
+    "publisher": { "@type": "Organization", "name": "Fin2Excel", "logo": { "@type": "ImageObject", "url": "https://fin2excel.com/assets/logo.png" } },
+    "datePublished": post.date ? new Date(post.date).toISOString() : new Date().toISOString(),
+  };
 
   return (
     <div className="bg-white min-h-screen pt-40 pb-20 selection:bg-swiss-blue selection:text-white">
-      {/* Article Header */}
+      <JsonLd data={jsonLd} />
       <article className="max-w-[800px] mx-auto px-6">
         <header className="mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="flex items-center gap-4 mb-8">
-              <span className="px-3 py-1 bg-swiss-blue/10 text-swiss-blue text-[10px] font-bold uppercase tracking-widest rounded-full">
-                {post.category}
-              </span>
-              <span className="text-swiss-dark-gray text-xs font-medium">{post.readTime}</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-display font-bold leading-[1.1] mb-6 text-swiss-black uppercase">
-              {post.title}
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-swiss-dark-gray leading-snug font-sans mb-10">
-              {post.subtitle}
-            </p>
+          <div className="flex items-center gap-4 mb-8">
+            <span className="px-3 py-1 bg-swiss-blue/10 text-swiss-blue text-[10px] font-bold uppercase tracking-widest rounded-full">
+              {post.category}
+            </span>
+            <span className="text-swiss-dark-gray text-xs font-medium">{post.readTime}</span>
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl font-display font-bold leading-[1.1] mb-6 text-swiss-black uppercase">
+            {post.title}
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-swiss-dark-gray leading-snug font-sans mb-10">
+            {post.subtitle}
+          </p>
 
-            <div className="flex items-center justify-between py-8 border-y border-swiss-black/5">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden bg-swiss-blue/10 flex items-center justify-center">
-                  <img src={post.author.avatar} alt={post.author.name} className="w-8 h-8 object-contain" />
-                </div>
-                <div>
-                  <div className="font-bold text-sm uppercase tracking-tight">{post.author.name}</div>
-                  <div className="text-xs text-swiss-dark-gray uppercase tracking-widest">{post.author.role}</div>
-                </div>
+          <div className="flex items-center justify-between py-8 border-y border-swiss-black/5">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-swiss-blue/10 flex items-center justify-center">
+                <img src={post.author.avatar} alt={post.author.name} className="w-8 h-8 object-contain" />
               </div>
-              <div className="text-right">
-                <div className="text-xs font-bold text-swiss-dark-gray uppercase tracking-widest">{post.date}</div>
+              <div>
+                <div className="font-bold text-sm uppercase tracking-tight">{post.author.name}</div>
+                <div className="text-xs text-swiss-dark-gray uppercase tracking-widest">{post.author.role}</div>
               </div>
             </div>
-          </motion.div>
+            <div className="text-right">
+              <div className="text-xs font-bold text-swiss-dark-gray uppercase tracking-widest">{post.date}</div>
+            </div>
+          </div>
         </header>
 
-        {/* Featured Image */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="aspect-video w-full mb-16 overflow-hidden rounded-sm"
-        >
+        <div className="aspect-video w-full mb-16 overflow-hidden rounded-sm">
           <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
-        </motion.div>
+        </div>
 
-        {/* Article Body */}
         <div 
           className="prose prose-lg max-w-none font-sans text-swiss-black/90 leading-[1.8] space-y-6"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
-        {/* Article Footer */}
         <footer className="mt-24 pt-12 border-t border-swiss-black/10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">

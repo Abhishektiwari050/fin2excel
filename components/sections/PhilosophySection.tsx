@@ -77,7 +77,7 @@ export function PhilosophySection() {
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
       >
-        <h2 className="text-4xl md:text-8xl font-display leading-[0.9] tracking-tighter uppercase mb-6">
+        <h2 className="text-4xl md:text-7xl lg:text-8xl font-display leading-[0.9] tracking-tighter uppercase mb-6">
           The Stroke <br /> 
           <span className="italic text-swiss-blue">That follows</span> <br />
           the Scroll.

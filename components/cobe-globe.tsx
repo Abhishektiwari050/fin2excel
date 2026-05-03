@@ -211,7 +211,6 @@ export function Globe({
         ref={canvasRef}
         onPointerDown={handlePointerDown}
         className="globe-canvas"
-        style={{ willChange: 'transform', transform: 'translateZ(0)' }}
       />
     </div>
   )
