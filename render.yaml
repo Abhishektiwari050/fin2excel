@@ -14,9 +14,7 @@ services:
       - key: DATABASE_CLIENT
         value: postgres
       - key: DATABASE_URL
-        fromDatabase:
-          name: fin2excel-db
-          property: connectionString
+        value: postgresql://neondb_owner:npg_e2AMQLEb5vWc@ep-gentle-meadow-ao11993v-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
       # Cloudinary Env Vars
       - key: CLOUDINARY_NAME
         value: dbqgjyut7
@@ -24,7 +22,5 @@ services:
         value: 925333966734263
       - key: CLOUDINARY_SECRET
         value: b8Nw04ZcN6WtMZ-W8kx3nOE4yTE
-
-databases:
-  - name: fin2excel-db
-    plan: free
+      # You will need to manually add the Strapi secrets below in the Render Dashboard:
+      # APP_KEYS, API_TOKEN_SALT, ADMIN_JWT_SECRET, TRANSFER_TOKEN_SALT, JWT_SECRET
