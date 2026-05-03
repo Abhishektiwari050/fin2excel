@@ -9,7 +9,7 @@ import { StatsSection } from "@/components/sections/StatsSection"
 import { LogoMarquee } from "@/components/sections/LogoMarquee"
 import { AudienceSection } from "@/components/sections/AudienceSection"
 import { CTASection } from "@/components/sections/CTASection"
-import { PhilosophySection } from "@/components/sections/PhilosophySection"
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection"
 import { ServicesSection } from "@/components/sections/ServicesSection"
 import { ProcessSection } from "@/components/sections/ProcessSection"
 import { Skiper19 } from "@/components/ui/svg-follow-scroll"
@@ -118,8 +118,8 @@ export default function LandingPage() {
 
         <CTASection />
 
-        <div id="philosophy">
-          <PhilosophySection />
+        <div id="testimonials">
+          <TestimonialsSection />
         </div>
 
         <Skiper19 />
