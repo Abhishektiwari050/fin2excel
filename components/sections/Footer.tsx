@@ -11,16 +11,11 @@ export function Footer() {
 
   return (
     <footer ref={ref} className="relative bg-swiss-black text-swiss-bg pt-32 pb-12 px-6 md:px-10 overflow-hidden">
-      {/* Background brand text */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none" aria-hidden="true">
-        <div className="relative w-[40vw] h-[40vw] opacity-[0.03]">
-          <Image 
-            src="/assets/logo.png" 
-            alt="" 
-            fill 
-            className="object-contain grayscale brightness-0 invert opacity-[0.03]"
-          />
-        </div>
+      {/* Background brand text - Large & Subtle */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full pointer-events-none select-none overflow-hidden flex justify-center items-end" aria-hidden="true">
+        <h2 className="text-[22vw] font-bold leading-[0.7] tracking-tighter text-white/[0.03] uppercase whitespace-nowrap translate-y-1/4">
+          FIN2EXCEL
+        </h2>
       </div>
 
       <div className="relative z-10 max-w-[1400px] mx-auto">
