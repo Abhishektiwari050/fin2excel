@@ -14,13 +14,13 @@ services:
       - key: DATABASE_CLIENT
         value: postgres
       - key: DATABASE_URL
-        value: postgresql://neondb_owner:npg_e2AMQLEb5vWc@ep-gentle-meadow-ao11993v-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+        sync: false # Set this value in the Render Dashboard
       # Cloudinary Env Vars
       - key: CLOUDINARY_NAME
-        value: dbqgjyut7
+        sync: false # Set this value in the Render Dashboard
       - key: CLOUDINARY_KEY
-        value: 925333966734263
+        sync: false # Set this value in the Render Dashboard
       - key: CLOUDINARY_SECRET
-        value: b8Nw04ZcN6WtMZ-W8kx3nOE4yTE
+        sync: false # Set this value in the Render Dashboard
       # You will need to manually add the Strapi secrets below in the Render Dashboard:
       # APP_KEYS, API_TOKEN_SALT, ADMIN_JWT_SECRET, TRANSFER_TOKEN_SALT, JWT_SECRET
