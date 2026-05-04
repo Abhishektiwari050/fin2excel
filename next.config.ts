@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'fin2excel-cms.onrender.com',
+        hostname: 'fin2excel.onrender.com',
         port: '',
         pathname: '/**',
       },
